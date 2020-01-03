@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Component</title>
+    <script src="../../dist/vue.js"></script>
+    <style>
+      textarea {
+        width: 100%;
+        height: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script>
+      var ComponentB = {
+        template: `<div>ComponentB: dataB is {{dataB}}.</div>`,
+        props: ["dataB"]
+      };
+      var ComponentA = {
+        template: `<div>ComponentA <ComponentB :dataB="dataB" /><br><button @click="onclickbtn" >按钮</button></div>`,
+        components: { ComponentB },
+        data: function() {
+          return {
+            dataB: "-dataB-from-parent"
+          };
+        },
+        methods: {
+          onclickbtn: function() {
+            debugger
+            this.dataB += 1;
+          }
+        }
+      };
+      var ComponentC = {
+        template: `<div>I'm ComponentC</div>`,
+        mounted: function(){ console.log('ComponentC mounted') }
+      }
+      new Vue({
+        el: "#app",
+        template: `<div>
+          <ComponentC />
+        </div>`,
+        components: {
+          ComponentA,
+          ComponentC,
+        },
+        mounted: function(){ console.log('main component mounted') },
+
+        computed: {},
+
+        methods: {}
+      });
+
+      console.error = function(error) {
+        throw new Error(error);
+      };
+    </script>
+  </body>
+</html>

@@ -541,6 +541,7 @@ export function createPatchFunction (backend) {
 
     let i
     const data = vnode.data
+    // river mark: prepatch: update props
     if (isDef(data) && isDef(i = data.hook) && isDef(i = i.prepatch)) {
       i(oldVnode, vnode)
     }
@@ -553,6 +554,7 @@ export function createPatchFunction (backend) {
     }
     if (isUndef(vnode.text)) {
       if (isDef(oldCh) && isDef(ch)) {
+      // river mark: prepatch: dom diff
         if (oldCh !== ch) updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly)
       } else if (isDef(ch)) {
         if (process.env.NODE_ENV !== 'production') {
